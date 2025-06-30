@@ -1,0 +1,51 @@
+<RCC>
+    <qresource prefix="/bat">
+        <file>cursor/frame_04_delay-0.08s.gif</file>
+        <file>cursor/frame_05_delay-0.08s.gif</file>
+        <file>cursor/frame_06_delay-0.08s.gif</file>
+        <file>cursor/frame_07_delay-0.08s.gif</file>
+        <file>cursor/frame_08_delay-0.08s.gif</file>
+        <file>cursor/frame_09_delay-0.08s.gif</file>
+        <file>cursor/frame_10_delay-0.08s.gif</file>
+        <file>cursor/frame_11_delay-0.08s.gif</file>
+        <file>cursor/frame_12_delay-0.08s.gif</file>
+        <file>cursor/frame_13_delay-0.08s.gif</file>
+        <file>cursor/frame_14_delay-0.08s.gif</file>
+        <file>cursor/frame_15_delay-0.08s.gif</file>
+        <file>cursor/frame_16_delay-0.08s.gif</file>
+        <file>cursor/frame_17_delay-0.08s.gif</file>
+    </qresource>
+    <qresource prefix="/sounds"/>
+    <qresource prefix="/zub">
+        <file>resources/0.png</file>
+        <file>resources/1.png</file>
+        <file>resources/2.png</file>
+        <file>resources/3.png</file>
+        <file>resources/4.png</file>
+        <file>resources/5.png</file>
+        <file>resources/6.png</file>
+        <file>resources/7.png</file>
+    </qresource>
+    <qresource prefix="/ambulance">
+        <file>ambulance/frame_0_delay-0.1s.gif</file>
+        <file>ambulance/frame_1_delay-0.1s.gif</file>
+        <file>ambulance/frame_2_delay-0.1s.gif</file>
+        <file>ambulance/frame_3_delay-0.1s.gif</file>
+        <file>ambulance/frame_4_delay-0.1s.gif</file>
+        <file>ambulance/frame_5_delay-0.1s.gif</file>
+    </qresource>
+    <qresource prefix="/snd">
+        <file>sounds/clicksound.wav</file>
+        <file>sounds/hit.wav</file>
+        <file>sounds/mainmenu.wav</file>
+        <file>sounds/menusound2.wav</file>
+        <file>sounds/menusound3.wav</file>
+        <file>sounds/miss.wav</file>
+        <file>sounds/victory.wav</file>
+        <file>sounds/mainTheme0.wav</file>
+        <file>sounds/mainTheme1.wav</file>
+        <file>sounds/mainTheme2.wav</file>
+        <file>sounds/ambulance.wav</file>
+        <file>sounds/scream.wav</file>
+    </qresource>
+</RCC>
