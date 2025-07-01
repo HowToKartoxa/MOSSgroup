@@ -64,9 +64,42 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
     }
     else{
         nightmareMode = true;
-
-        //////////////////////////////////////
-
+        zubzub* temp = new zubzub(Vector2(width() / 3 // start pos
+                                          , height() / 4)     //
+                                  , 40               // mass
+                                  , 10    // hp
+                                  , 230   // forceMult
+                                  , 400   // borderForceMult
+                                  , 0.01 // dragCoeff
+                                  , 90   // maxSpeed
+                                  , width()           // xLimit
+                                  , height()          // yLimit
+                                  , 8);
+        zubList.push_back(temp);
+        temp = new zubzub(Vector2(width() / 3 * 2 // start pos
+                                          , height() / 4)     //
+                                  , 40               // mass
+                                  , 10    // hp
+                                  , 230   // forceMult
+                                  , 400   // borderForceMult
+                                  , 0.01 // dragCoeff
+                                  , 90   // maxSpeed
+                                  , width()           // xLimit
+                                  , height()          // yLimit
+                                  , 8);
+        zubList.push_back(temp);
+        temp = new zubzub(Vector2(width() / 2 // start pos
+                                          , height() / 4 * 3)     //
+                                  , 40               // mass
+                                  , 10    // hp
+                                  , 230   // forceMult
+                                  , 400   // borderForceMult
+                                  , 0.01 // dragCoeff
+                                  , 90   // maxSpeed
+                                  , width()           // xLimit
+                                  , height()          // yLimit
+                                  , 8);
+        zubList.push_back(temp);
     }
     updateTimer = new QTimer(this);
     cursorUpdateTimer = new QTimer(this);
@@ -99,42 +132,86 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
     }
 
     if(nightmareMode){
-
-
-        ///////////////////////////////////////
-
+        connect(zubList[0], &zubzub::died, this, &GameSpace::onZubZubDied);
+        connect(zubList[1], &zubzub::died, this, &GameSpace::onZubZubDied);
+        connect(zubList[2], &zubzub::died, this, &GameSpace::onZubZubDied);
     }
     else{
         connect(zub, &zubzub::died, this, &GameSpace::onZubZubDied);
-        gameGoing = true;
     }
+    gameGoing = true;
 }
 
 void GameSpace::updateEvent(){
-    if(nightmareMode){
-
-        //////////////////////////////////////
-
+    if(gameGoing){
+        if(nightmareMode){
+            zubList[0]->physicsProcess(Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), 25);
+            zubList[1]->physicsProcess(Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), 25);
+            zubList[2]->physicsProcess(Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), 25);
+        }
+        else zub->physicsProcess(Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), 25);
     }
-    else if(gameGoing) zub->physicsProcess(Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), 25);
     repaint();
 }
 
 void GameSpace::paintEvent(QPaintEvent* ev){
     QPainter painter(this);
-    if(nightmareMode){
-
-        ////////////////////////////////////////
-
+    if(gameGoing){
+        if(nightmareMode){
+            zubList[0]->graphicsProcess(&painter, Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), showVectors);
+            zubList[1]->graphicsProcess(&painter, Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), showVectors);
+            zubList[2]->graphicsProcess(&painter, Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), showVectors);
+        }
+        else zub->graphicsProcess(&painter, Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), showVectors);
     }
-    else if(gameGoing) zub->graphicsProcess(&painter, Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), showVectors);
     QWidget::paintEvent(ev);
 }
 
 void GameSpace::mousePressEvent(QMouseEvent* ev){
     if(!cursorUpdateTimer->isActive())cursorUpdateTimer->start();
     if(nightmareMode){
-
+        unsigned int i = 0;
+        bool played_sound = false;
+        while(i < 3){
+            if((Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()) - zubList[i]->position()).length() < 25){
+                if(playSounds){
+                    QSoundEffect* effect = new QSoundEffect(this);
+                    effect->setVolume(0.5f);
+                    effect->setSource(QUrl("qrc:///snd/sounds/hit.wav"));
+                    effect->play();
+                    played_sound = true;
+                }
+                if(!zubList[i]->isCurrentlyDying()){
+                    unsigned int eval = zubList[i]->hp();
+                    eval--;
+                    if(eval <= 0){
+                        if(playSounds){
+                            QSoundEffect* effect = new QSoundEffect(this);
+                            effect->setVolume(0.5f);
+                            effect->setSource(QUrl("qrc:///snd/sounds/scream.wav"));
+                            effect->play();
+                            QSoundEffect* effect1 = new QSoundEffect(this);
+                            effect1->setVolume(0.5f);
+                            effect1->setSource(QUrl("qrc:///snd/sounds/ambulance.wav"));
+                            effect1->play();
+                        }
+                        zubList[i]->takeHit(true);
+                    }
+                    else zubList[i]->takeHit();
+                    zubList[i]->setHp(eval);
+                }
+            }
+            else{
+                if(playSounds && !played_sound){
+                    QSoundEffect* effect = new QSoundEffect(this);
+                    effect->setVolume(0.2f);
+                    effect->setSource(QUrl("qrc:///snd/sounds/miss.wav"));
+                    effect->play();
+                    played_sound = true;
+                }
+            }
+            i++;
+        }
         ///////////////////////////////////////
 
     }
@@ -180,9 +257,23 @@ void GameSpace::mousePressEvent(QMouseEvent* ev){
 
 void GameSpace::onZubZubDied(zubzub* _zub){
     if(nightmareMode){
-
-        //////////////////////////////////
-
+        bool indicator = true;
+        unsigned int i = 0;
+        while(indicator){
+            if(zubList[i] == _zub){
+                disconnect(zub, &zubzub::died, this, &GameSpace::onZubZubDied);
+                zubList.removeAt(i);
+                indicator = false;
+            }
+            i++;
+        }
+        if(zubList.isEmpty()){
+            gameGoing = false;
+            emit finishedGame();
+            hide();
+            disconnect(mainTheme, &QSoundEffect::playingChanged, this, &GameSpace::changeTheme);
+            mainTheme->stop();
+        }
     }
     else{
         gameGoing = false;
@@ -196,12 +287,14 @@ void GameSpace::onZubZubDied(zubzub* _zub){
 }
 
 void GameSpace::resizeEvent(QResizeEvent* ev){
-    if(nightmareMode){
-
-        ///////////////////////////////////
-
+    if(gameGoing){
+        if(nightmareMode){
+            zubList[0]->changeLimits(ev);
+            zubList[1]->changeLimits(ev);
+            zubList[2]->changeLimits(ev);
+        }
+        else zub->changeLimits(ev);
     }
-    else if(gameGoing) zub->changeLimits(ev);
 }
 
 void GameSpace::cursorUpdateEvent(){
