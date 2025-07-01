@@ -29,7 +29,6 @@ void endMenu::on_pushButton_clicked()
     emit finishedGame();
 }
 
-
 void endMenu::on_pushButton_2_clicked()
 {
     setVisible(false);
