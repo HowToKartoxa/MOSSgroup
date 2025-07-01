@@ -18,6 +18,7 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
 {
     srand(time(0));
     ui->setupUi(this);
+    setFocusPolicy(Qt::StrongFocus);
     if(useFullscreen) showFullScreen();
     else show();
     if(difficulty == 0){
@@ -243,5 +244,22 @@ void GameSpace::changeTheme(){
         mainTheme->setSource(QUrl(QString("qrc:///snd/sounds/mainTheme%1.wav").arg(rand()%3)));
         mainTheme->setVolume(0.2f);
         mainTheme->play();
+    }
+}
+
+void GameSpace::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_F11)
+    {
+        if(!useFullscreen)
+        {
+            useFullscreen = true;
+            showFullScreen();
+        }
+        else
+        {
+            useFullscreen = false;
+            showNormal();
+        }
     }
 }

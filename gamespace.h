@@ -42,11 +42,12 @@ private:
 
 
 private slots:
-    void paintEvent(QPaintEvent* ev);
-    void resizeEvent(QResizeEvent* ev);
+    void paintEvent(QPaintEvent* ev) override;
+    void resizeEvent(QResizeEvent* ev) override;
     void updateEvent();
-    void mousePressEvent(QMouseEvent* ev);
+    void mousePressEvent(QMouseEvent* ev) override;
     void onZubZubDied(zubzub*);
+    void keyPressEvent(QKeyEvent *event) override;
 
     void cursorUpdateEvent();
 
