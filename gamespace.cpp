@@ -19,6 +19,8 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
     srand(time(0));
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus);
+    setWindowTitle("Chuchelo");
+    setWindowIcon(QIcon(":/zub/resources/0.png"));
     if(useFullscreen) showFullScreen();
     else show();
     if(difficulty == 0){

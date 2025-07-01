@@ -40,6 +40,7 @@ private:
 
     QSoundEffect* mainTheme;
 
+    endMenu* endm;
 
 
 private slots:

@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     , mainMenuTheme(nullptr)
 {
     ui->setupUi(this);
+    setFocusPolicy(Qt::StrongFocus);
     setWindowTitle("Main menu");
     setWindowIcon(QIcon(":/zub/resources/0.png"));
     mainMenuTheme = new QSoundEffect(this);
@@ -24,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionsounds, &QAction::toggled, this, &MainWindow::onSoundsToggled);
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::onDifficultySelected);
     connect(ui->startbtn, &QAbstractButton::clicked, this, &MainWindow::onStartButtonPressed);
-    connect(ui->exitbtn, &QAbstractButton::clicked, this, &MainWindow::onExitButtonPressed);\
+    connect(ui->exitbtn, &QAbstractButton::clicked, this, &MainWindow::onExitButtonPressed);
 
     if(playSounds) mainMenuTheme->play();
 }
@@ -57,12 +58,14 @@ void MainWindow::onSoundsToggled(){
 
 void MainWindow::onFullscreenToggled(){
     useFullscreen = !useFullscreen;
+    //ui->actionfullscreen->setChecked(!useFullscreen);
     if(playSounds){
         QSoundEffect* effect = new QSoundEffect(this);
         effect->setVolume(0.5f);
         effect->setSource(QUrl("qrc:///snd/sounds/menusound3.wav"));
         effect->play();
     }
+
 }
 
 void MainWindow::onStartButtonPressed(){
@@ -107,3 +110,18 @@ MainWindow::~MainWindow()
     if(gameSpace != nullptr) delete gameSpace;
     delete ui;
 }
+
+// void MainWindow::keyPressEvent(QKeyEvent *event)
+// {
+//     if (event->key() == Qt::Key_F11)
+//     {
+//         useFullscreen = !useFullscreen;
+//         ui->actionfullscreen->setChecked(!useFullscreen);
+//         if(playSounds){
+//             QSoundEffect* effect = new QSoundEffect(this);
+//             effect->setVolume(0.5f);
+//             effect->setSource(QUrl("qrc:///snd/sounds/menusound3.wav"));
+//             effect->play();
+//         }
+//     }
+// }

@@ -6,16 +6,13 @@ endMenu::endMenu(QWidget *parent)
     , ui(new Ui::endMenu)
 {
     ui->setupUi(this);
-    setWindowTitle("ЧУЧЕЛО");
+    setWindowTitle("The end");
+    setWindowIcon(QIcon(":/zub/resources/0.png"));
     ui->label_2->setStyleSheet("font-size: 30px;");
     setFixedSize(this->width(), this->height());
-    QPixmap pixmap("qrc:///bat/pictures//grob.png");
+    QPixmap pixmap(":/statPictures/pictures/grob.png");
     pixmap = pixmap.scaledToWidth(this->width()/3, Qt::SmoothTransformation);
-    if (pixmap.isNull()) {
-        qDebug() << "Ошибка загрузки изображения! Проверьте путь и формат файла.";
-    } else {
-        ui->label->setPixmap(pixmap);
-    }
+    ui->label->setPixmap(pixmap);
 }
 
 endMenu::~endMenu()

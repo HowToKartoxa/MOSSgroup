@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <gamespace.h>
+#include "gamespace.h"
 #include "endmenu.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,5 +39,8 @@ private slots:
     void onFullscreenToggled();
     void onFinishedGame();
     void restart();
+    // void keyPressEvent(QKeyEvent *event) override;
+
+
 };
 #endif // MAINWINDOW_H
