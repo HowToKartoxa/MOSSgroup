@@ -2,7 +2,7 @@
 #include "ui_gamespace.h"
 #include <QMouseEvent>
 
-GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _useFullscreen, bool _playSounds)
+GameSpace::GameSpace(QWidget *parent, int _difficulty, bool _showVectors, bool _useFullscreen, bool _playSounds)
     : QWidget(parent)
     , ui(new Ui::GameSpace)
     , nightmareMode(false)
@@ -15,9 +15,31 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
     , cursorUpdateTimer(nullptr)
     , gameGoing(false)
     , cursorFrames()
+    , difficulty (_difficulty)
 {
+
     srand(time(0));
     ui->setupUi(this);
+    ui->progressBar->setValue(100);
+    ui->progressBar->setStyleSheet(R"(
+QProgressBar {
+        border: 1px solid #555;
+        border-radius: 0px;
+        background-color: #eee;
+        text-align: center;
+    }
+
+    QProgressBar::groove {
+        height: 8px;
+        margin: 0px;
+    }
+QProgressBar::chunk {
+        background-color: #ed2e46;
+        border-radius: 0px;
+        min-width: 8px;
+    }
+)");
+
     if(useFullscreen) showFullScreen();
     else show();
     if(difficulty == 0){
@@ -33,6 +55,7 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
                          , width()           // xLimit
                          , height()          // yLimit
                          , 8);               // ambulanceSpeed
+        difficulty = zub->hp();
     }
     else if(difficulty == 1){
         nightmareMode = false;
@@ -47,6 +70,7 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
                          , width()           // xLimit
                          , height()          // yLimit
                          , 8);
+        difficulty = zub->hp();
     }
     else if(difficulty == 2){
         nightmareMode = false;
@@ -61,6 +85,7 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
                          , width()           // xLimit
                          , height()          // yLimit
                          , 8);
+        difficulty = zub->hp();
     }
     else{
         nightmareMode = true;
@@ -118,6 +143,8 @@ void GameSpace::updateEvent(){
     }
     else if(gameGoing) zub->physicsProcess(Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), 25);
     repaint();
+
+
 }
 
 void GameSpace::paintEvent(QPaintEvent* ev){
@@ -129,6 +156,7 @@ void GameSpace::paintEvent(QPaintEvent* ev){
     }
     else if(gameGoing) zub->graphicsProcess(&painter, Vector2(mapFromGlobal(this->cursor().pos()).rx(), mapFromGlobal(this->cursor().pos()).ry()), showVectors);
     QWidget::paintEvent(ev);
+
 }
 
 void GameSpace::mousePressEvent(QMouseEvent* ev){
@@ -149,8 +177,10 @@ void GameSpace::mousePressEvent(QMouseEvent* ev){
             if(!zub->isCurrentlyDying()){
                 unsigned int eval = zub->hp();
                 eval--;
+
                 if(eval <= 0){
                     if(playSounds){
+
                         QSoundEffect* effect = new QSoundEffect(this);
                         effect->setVolume(0.5f);
                         effect->setSource(QUrl("qrc:///snd/sounds/scream.wav"));
@@ -164,6 +194,7 @@ void GameSpace::mousePressEvent(QMouseEvent* ev){
                 }
                 else zub->takeHit();
                 zub->setHp(eval);
+                updateZubProgressBar(zub);
             }
         }
         else{
@@ -245,3 +276,17 @@ void GameSpace::changeTheme(){
         mainTheme->play();
     }
 }
+
+void GameSpace::updateZubProgressBar(zubzub *zub)
+{
+
+    //if (!zub || zub->isCurrentlyDying()) return;
+
+    unsigned int maxHP = difficulty;
+    int currHP = zub->hp();
+    int percent = static_cast<int>(100.0 * currHP / maxHP);
+    ui->progressBar->setValue(percent);
+
+}
+
+
