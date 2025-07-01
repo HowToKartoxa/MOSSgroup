@@ -188,12 +188,27 @@ void GameSpace::onZubZubDied(zubzub* _zub){
     else{
         gameGoing = false;
         disconnect(zub, &zubzub::died, this, &GameSpace::onZubZubDied);
-        emit finishedGame();
+        //emit finishedGame();
         //delete this;
         hide();
         disconnect(mainTheme, &QSoundEffect::playingChanged, this, &GameSpace::changeTheme);
         mainTheme->stop();
+        endMenu* endm = new endMenu;
+        endm->show();
+        connect(endm, &endMenu::finishedGame, this, &GameSpace::onFinishedGame);
+        connect(endm, &endMenu::restart, this, &GameSpace::restart);
     }
+}
+
+void GameSpace::onFinishedGame()
+{
+    emit finishedGame();
+}
+
+void GameSpace::restart()
+{
+    setVisible(false);
+    emit restartSignal();
 }
 
 void GameSpace::resizeEvent(QResizeEvent* ev){

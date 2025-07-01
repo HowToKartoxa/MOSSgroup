@@ -5,6 +5,7 @@
 #include "zubzub.h"
 #include <QTimer>
 #include <QSoundEffect>
+#include "endmenu.h"
 
 namespace Ui {
 class GameSpace;
@@ -53,8 +54,12 @@ private slots:
 
     void changeTheme();
 
+    void onFinishedGame();
+    void restart();
+
 signals:
     void finishedGame();
+    void restartSignal();
 };
 
 #endif // GAMESPACE_H

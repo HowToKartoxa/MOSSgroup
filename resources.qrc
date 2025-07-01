@@ -14,6 +14,7 @@
         <file>cursor/frame_15_delay-0.08s.gif</file>
         <file>cursor/frame_16_delay-0.08s.gif</file>
         <file>cursor/frame_17_delay-0.08s.gif</file>
+        <file>pictures/grob.png</file>
     </qresource>
     <qresource prefix="/sounds"/>
     <qresource prefix="/zub">
