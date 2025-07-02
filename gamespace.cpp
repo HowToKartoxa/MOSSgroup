@@ -18,6 +18,9 @@ GameSpace::GameSpace(QWidget *parent, int difficulty, bool _showVectors, bool _u
 {
     srand(time(0));
     ui->setupUi(this);
+    setFocusPolicy(Qt::StrongFocus);
+    setWindowTitle("Chuchelo");
+    setWindowIcon(QIcon(":/zub/resources/0.png"));
     if(useFullscreen) showFullScreen();
     else show();
     if(difficulty == 0){
@@ -187,12 +190,27 @@ void GameSpace::onZubZubDied(zubzub* _zub){
     else{
         gameGoing = false;
         disconnect(zub, &zubzub::died, this, &GameSpace::onZubZubDied);
-        emit finishedGame();
+        //emit finishedGame();
         //delete this;
         hide();
         disconnect(mainTheme, &QSoundEffect::playingChanged, this, &GameSpace::changeTheme);
         mainTheme->stop();
+        endMenu* endm = new endMenu;
+        endm->show();
+        connect(endm, &endMenu::finishedGame, this, &GameSpace::onFinishedGame);
+        connect(endm, &endMenu::restart, this, &GameSpace::restart);
     }
+}
+
+void GameSpace::onFinishedGame()
+{
+    emit finishedGame();
+}
+
+void GameSpace::restart()
+{
+    setVisible(false);
+    emit restartSignal();
 }
 
 void GameSpace::resizeEvent(QResizeEvent* ev){
@@ -243,5 +261,22 @@ void GameSpace::changeTheme(){
         mainTheme->setSource(QUrl(QString("qrc:///snd/sounds/mainTheme%1.wav").arg(rand()%3)));
         mainTheme->setVolume(0.2f);
         mainTheme->play();
+    }
+}
+
+void GameSpace::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_F11)
+    {
+        if(!useFullscreen)
+        {
+            useFullscreen = true;
+            showFullScreen();
+        }
+        else
+        {
+            useFullscreen = false;
+            showNormal();
+        }
     }
 }

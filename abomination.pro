@@ -10,6 +10,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    endmenu.cpp \
     gamespace.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -17,12 +18,14 @@ SOURCES += \
     zubzub.cpp
 
 HEADERS += \
+    endmenu.h \
     gamespace.h \
     mainwindow.h \
     vector2.h \
     zubzub.h
 
 FORMS += \
+    endmenu.ui \
     gamespace.ui \
     mainwindow.ui
 
