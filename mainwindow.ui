@@ -97,6 +97,11 @@
         <string>Высокая</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>Ужас - ужас</string>
+       </property>
+      </item>
      </widget>
     </item>
     <item>

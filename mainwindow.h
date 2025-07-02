@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <gamespace.h>
+#include "gamespace.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
