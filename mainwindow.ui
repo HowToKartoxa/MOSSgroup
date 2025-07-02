@@ -157,7 +157,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Полноэкранный режим</string>
+    <string>Полноэкранный режим (F11)</string>
    </property>
   </action>
   <action name="actionsounds">
