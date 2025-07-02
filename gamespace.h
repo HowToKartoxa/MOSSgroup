@@ -26,6 +26,7 @@ private:
     bool showVectors;
     bool useFullscreen;
     bool playSounds;
+    int difficulty;
 
     zubzub* zub;
     QList<zubzub*> zubList;
@@ -54,7 +55,7 @@ private slots:
     void cursorUpdateEvent();
 
     void changeTheme();
-
+    void updateZubProgressBar(zubzub *zub);
     void onFinishedGame();
     void restart();
 
