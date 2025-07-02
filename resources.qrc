@@ -47,6 +47,7 @@
         <file>sounds/mainTheme2.wav</file>
         <file>sounds/ambulance.wav</file>
         <file>sounds/scream.wav</file>
+        <file>sounds/final_song.wav</file>
     </qresource>
     <qresource prefix="/statPictures">
         <file>pictures/grob.png</file>

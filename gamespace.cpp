@@ -315,7 +315,7 @@ void GameSpace::onZubZubDied(zubzub* _zub){
         hide();
         disconnect(mainTheme, &QSoundEffect::playingChanged, this, &GameSpace::changeTheme);
         mainTheme->stop();
-        endMenu* endm = new endMenu;
+        endMenu* endm = new endMenu(playSounds);
         endm->show();
         connect(endm, &endMenu::finishedGame, this, &GameSpace::onFinishedGame);
         connect(endm, &endMenu::restart, this, &GameSpace::restart);

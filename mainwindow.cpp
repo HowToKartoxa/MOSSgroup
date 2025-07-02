@@ -78,7 +78,7 @@ void MainWindow::onStartButtonPressed(){
     }
     delete gameSpace;
     gameSpace = new GameSpace(nullptr, difficulty, showVectors, useFullscreen, playSounds);
-    endm = new endMenu;
+    //endm = new endMenu(playSounds);
     connect(gameSpace, &GameSpace::finishedGame, this, &MainWindow::onFinishedGame);
     connect(gameSpace, &GameSpace::restartSignal, this, &MainWindow::restart);
     setVisible(false);

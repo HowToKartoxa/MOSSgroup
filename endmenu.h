@@ -2,6 +2,7 @@
 #define ENDMENU_H
 
 #include <QWidget>
+#include <QSoundEffect>
 
 namespace Ui {
 class endMenu;
@@ -12,11 +13,14 @@ class endMenu : public QWidget
     Q_OBJECT
 
 public:
-    explicit endMenu(QWidget *parent = nullptr);
+    explicit endMenu(bool playSounds_ = true, QWidget *parent = nullptr);
     ~endMenu();
 
 private:
     Ui::endMenu *ui;
+    QSoundEffect *endMenuTheme;
+
+    bool playSounds;
 
 signals:
     void finishedGame();

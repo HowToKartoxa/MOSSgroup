@@ -22,7 +22,7 @@ public:
 private:
     Ui::MainWindow *ui;
     GameSpace* gameSpace;
-    endMenu* endm;
+    //endMenu* endm;
     int difficulty;
     bool showVectors;
     bool playSounds;
