@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "gamespace.h"
+#include "endmenu.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,6 +22,7 @@ public:
 private:
     Ui::MainWindow *ui;
     GameSpace* gameSpace;
+    endMenu* endm;
     int difficulty;
     bool showVectors;
     bool playSounds;
@@ -36,5 +38,9 @@ private slots:
     void onSoundsToggled();
     void onFullscreenToggled();
     void onFinishedGame();
+    void restart();
+    // void keyPressEvent(QKeyEvent *event) override;
+
+
 };
 #endif // MAINWINDOW_H

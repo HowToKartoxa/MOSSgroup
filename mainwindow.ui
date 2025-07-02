@@ -73,7 +73,7 @@
        </font>
       </property>
       <property name="text">
-       <string>выберите сложность:</string>
+       <string>Выберите сложность:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -130,7 +130,7 @@
      <x>0</x>
      <y>0</y>
      <width>256</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOptions">
@@ -162,7 +162,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Полноэкранный режим</string>
+    <string>Полноэкранный режим (F11)</string>
    </property>
   </action>
   <action name="actionsounds">

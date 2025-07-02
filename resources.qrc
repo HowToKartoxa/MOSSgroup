@@ -48,4 +48,7 @@
         <file>sounds/ambulance.wav</file>
         <file>sounds/scream.wav</file>
     </qresource>
+    <qresource prefix="/statPictures">
+        <file>pictures/grob.png</file>
+    </qresource>
 </RCC>
