@@ -107,71 +107,71 @@ void zubzub::graphicsProcess(QPainter* painter, Vector2 cursorPos, bool drawVect
 }
 
 void zubzub::physicsProcess(Vector2 cursorPos, double timeDeltaMS){
-    if(!isDying){
+    // if(!isDying){
 
-        double coefficient = yLimit / xLimit;
+    //     double coefficient = yLimit / xLimit;
 
-        if(pos.xP() * coefficient > pos.yP()){
-            if((xLimit - pos.xP()) * coefficient < pos.yP()){ // 1 тр
-                if((xLimit - pos.xP()) < borderRadius) borderForce = Vector2(-1, 0).normalized(borderForceMultiplier / (xLimit - pos.xP()));
-                else borderForce = Vector2(0,0);
-            }
-            else{                      // 2 тр
-                if(pos.yP() < borderRadius) borderForce = Vector2(0, 1).normalized(borderForceMultiplier / pos.yP());
-                else borderForce = Vector2(0,0);
-            }
-        }
-        else{
-            if(yLimit - pos.yP() > (pos.xP() * coefficient)){ // 3 тр
-                if(pos.xP() < borderRadius) borderForce = Vector2(1,0).normalized(borderForceMultiplier / pos.xP());
-                else borderForce = Vector2(0,0);
-            }
-            else{                      // 4 тр
-                if((yLimit - pos.yP()) < borderRadius) borderForce = Vector2(0, -1).normalized(borderForceMultiplier / (yLimit - pos.yP()));
-                else borderForce = Vector2(0,0);
-            }
-        }
+    //     if(pos.xP() * coefficient > pos.yP()){
+    //         if((xLimit - pos.xP()) * coefficient < pos.yP()){ // 1 тр
+    //             if((xLimit - pos.xP()) < borderRadius) borderForce = Vector2(-1, 0).normalized(borderForceMultiplier / (xLimit - pos.xP()));
+    //             else borderForce = Vector2(0,0);
+    //         }
+    //         else{                      // 2 тр
+    //             if(pos.yP() < borderRadius) borderForce = Vector2(0, 1).normalized(borderForceMultiplier / pos.yP());
+    //             else borderForce = Vector2(0,0);
+    //         }
+    //     }
+    //     else{
+    //         if(yLimit - pos.yP() > (pos.xP() * coefficient)){ // 3 тр
+    //             if(pos.xP() < borderRadius) borderForce = Vector2(1,0).normalized(borderForceMultiplier / pos.xP());
+    //             else borderForce = Vector2(0,0);
+    //         }
+    //         else{                      // 4 тр
+    //             if((yLimit - pos.yP()) < borderRadius) borderForce = Vector2(0, -1).normalized(borderForceMultiplier / (yLimit - pos.yP()));
+    //             else borderForce = Vector2(0,0);
+    //         }
+    //     }
 
-        if((pos - cursorPos).length() < engageRadius){
-            force = (pos - cursorPos).normalized(forceMultiplier / (pos - cursorPos).length());
-            drag = -(force + borderForce).normalized(dragFactor * mass);
-            if(drag.length() > force.length()) drag = drag.normalized(force.length());
-        }
-        else{
-            force = Vector2(0,0);
-            drag = -(speed + borderForce).normalized(dragFactor * mass);
-        }
+    //     if((pos - cursorPos).length() < engageRadius){
+    //         force = (pos - cursorPos).normalized(forceMultiplier / (pos - cursorPos).length());
+    //         drag = -(force + borderForce).normalized(dragFactor * mass);
+    //         if(drag.length() > force.length()) drag = drag.normalized(force.length());
+    //     }
+    //     else{
+    //         force = Vector2(0,0);
+    //         drag = -(speed + borderForce).normalized(dragFactor * mass);
+    //     }
 
-        if(speed.length() < 0.01 && force.length() == 0 && borderForce.length() == 0){
-            resultingForce = Vector2(0,0);
-            acceleration = Vector2(0,0);
-            speed = Vector2(0,0);
-            drag = Vector2(0,0);
-        }
-        else{
-            resultingForce = (force + drag) + borderForce;
-            acceleration = resultingForce / mass;
-            speed += acceleration * timeDeltaMS / 100;
-            if(speed.length() > maxSpeed) speed = speed.normalized(maxSpeed);
-            pos += speed * timeDeltaMS;
-        }
-        if(pos.xP() < 0){
-            pos += Vector2(xLimit, 0);
-            speed = Vector2(0,0);
-        }
-        else if(pos.xP() > xLimit){
-            pos -= Vector2(xLimit, 0);
-            speed = Vector2(0,0);
-        }
-        else if(pos.yP() < 0){
-            pos += Vector2(0, yLimit);
-            speed = Vector2(0,0);
-        }
-        else if(pos.yP() > yLimit){
-            pos -= Vector2(0, yLimit);
-            speed = Vector2(0,0);
-        }
-    }
+    //     if(speed.length() < 0.01 && force.length() == 0 && borderForce.length() == 0){
+    //         resultingForce = Vector2(0,0);
+    //         acceleration = Vector2(0,0);
+    //         speed = Vector2(0,0);
+    //         drag = Vector2(0,0);
+    //     }
+    //     else{
+    //         resultingForce = (force + drag) + borderForce;
+    //         acceleration = resultingForce / mass;
+    //         speed += acceleration * timeDeltaMS / 100;
+    //         if(speed.length() > maxSpeed) speed = speed.normalized(maxSpeed);
+    //         pos += speed * timeDeltaMS;
+    //     }
+    //     if(pos.xP() < 0){
+    //         pos += Vector2(xLimit, 0);
+    //         speed = Vector2(0,0);
+    //     }
+    //     else if(pos.xP() > xLimit){
+    //         pos -= Vector2(xLimit, 0);
+    //         speed = Vector2(0,0);
+    //     }
+    //     else if(pos.yP() < 0){
+    //         pos += Vector2(0, yLimit);
+    //         speed = Vector2(0,0);
+    //     }
+    //     else if(pos.yP() > yLimit){
+    //         pos -= Vector2(0, yLimit);
+    //         speed = Vector2(0,0);
+    //     }
+    // }
 }
 
 Vector2 zubzub::position(){

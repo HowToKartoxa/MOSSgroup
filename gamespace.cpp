@@ -312,13 +312,15 @@ void GameSpace::onZubZubDied(zubzub* _zub){
         disconnect(zub, &zubzub::died, this, &GameSpace::onZubZubDied);
         //emit finishedGame();
         //delete this;
-        hide();
+
         disconnect(mainTheme, &QSoundEffect::playingChanged, this, &GameSpace::changeTheme);
         mainTheme->stop();
-        endMenu* endm = new endMenu(playSounds);
-        endm->show();
+        //delete endm;
+        endm = new endMenu(playSounds);
+        //endm->show();
         connect(endm, &endMenu::finishedGame, this, &GameSpace::onFinishedGame);
         connect(endm, &endMenu::restart, this, &GameSpace::restart);
+        setVisible(false);
     }
 }
 

@@ -5,8 +5,10 @@ endMenu::endMenu(bool playSounds_, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::endMenu)
     , playSounds(playSounds_)
+    , endMenuTheme(nullptr)
 {
     ui->setupUi(this);
+
     setWindowTitle("The end");
     setWindowIcon(QIcon(":/zub/resources/0.png"));
     ui->label_2->setStyleSheet("font-size: 30px;");
@@ -14,16 +16,22 @@ endMenu::endMenu(bool playSounds_, QWidget *parent)
     QPixmap pixmap(":/statPictures/pictures/grob.png");
     pixmap = pixmap.scaledToWidth(this->width()/3, Qt::SmoothTransformation);
     ui->label->setPixmap(pixmap);
-    endMenuTheme = new QSoundEffect(this);
-    endMenuTheme->setSource(QUrl("qrc:///snd/sounds/final_song.wav"));
-    endMenuTheme->setLoopCount(QSoundEffect::Infinite);
-    endMenuTheme->setVolume(0.3f);
 
-    if(playSounds) endMenuTheme->play();
+    if(playSounds)
+    {
+        endMenuTheme = new QSoundEffect(this);
+        endMenuTheme->setSource(QUrl("qrc:///snd/sounds/final_song.wav"));
+        endMenuTheme->setLoopCount(QSoundEffect::Infinite);
+        endMenuTheme->setVolume(1.0f);
+        endMenuTheme->play();
+    }
+
+    show();
 }
 
 endMenu::~endMenu()
 {
+    if(endMenuTheme) delete endMenuTheme;
     delete ui;
 }
 
@@ -35,8 +43,9 @@ void endMenu::on_pushButton_clicked()
         effect->setSource(QUrl("qrc:///snd/sounds/menusound3.wav"));
         effect->play();
     }
-    endMenuTheme->stop();
-    setVisible(false);
+    if(endMenuTheme) endMenuTheme->stop();
+    //setVisible(false);
+    hide();
     emit finishedGame();
 }
 
@@ -48,8 +57,9 @@ void endMenu::on_pushButton_2_clicked()
         effect->setSource(QUrl("qrc:///snd/sounds/menusound3.wav"));
         effect->play();
     }
-    endMenuTheme->stop();
-    setVisible(false);
+    if(endMenuTheme) endMenuTheme->stop();
+    hide();
+    //setVisible(false);
     emit restart();
 }
 
